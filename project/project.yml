@@ -1,0 +1,57 @@
+title: "ECB+GPT AMR Experiments with spaCy and prodigy"
+description: ""
+
+vars:
+  gpu: 0
+  ecb-dir: corpus/ecb
+  ecb-mention-map: corpus/ecb/mention_map.pkl
+  pb-dict-path: outputs/common/pb.dict
+
+directories:
+  - "configs"
+  - "assets"
+  - "corpus"
+  - "scripts"
+  - "recipes"
+  - "outputs"
+  - "metrics"
+  - "annotations"
+
+workflows:
+  gpt-amr:
+    - "ecb-setup"
+
+
+assets:
+  - dest: "assets/ecb"
+    git:
+      repo: "https://github.com/cltl/ecbPlus"
+      branch: "master"
+      path: "ECB+_LREC2014"
+
+  - dest: "assets/propbank_frames"
+    git:
+      repo: "https://github.com/propbank/propbank-frames"
+      branch: "main"
+      path: "frames"
+
+commands:
+  - name: "ecb-setup"
+    script:
+      - >-
+        python -m scripts.parse_ecb assets/ecb ${vars.ecb-dir} en_core_web_lg
+    deps:
+      - assets/ecb
+    outputs:
+      - ${vars.ecb-mention-map}
+
+  - name: "save-propbank-dict"
+    help: "generate an easy to use propbank dictionary for roleset definitions"
+    script:
+      - echo "Saving propbank dict at ${vars.pb-dict-path}"
+      - python -m scripts.parse_propbank assets/propbank_frames ${vars.pb-dict-path}
+    deps:
+      - assets/propbank_frames
+    outputs:
+      - ${vars.pb-dict-path}
+
