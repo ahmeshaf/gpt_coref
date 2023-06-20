@@ -73,7 +73,11 @@ def save_pb_dict(
                 rs_defs = {
                     'sense': rs_id,
                     'lemma': predicate,
+                    'frame': predicate,
                     'definition': roleset['name'],
+                    'aliases': [
+                        al.text for al in roleset.find_all('alias')
+                    ],
                     'roles': [
                         {'id': 'ARG-' + r['n'], 'definition': r['descr']}
                         for r in roleset.find('roles').find_all('role')
