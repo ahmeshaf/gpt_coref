@@ -1,0 +1,31 @@
+You are a concise and expert annotator that follows these instructions to extract event arguments using a hybrid Semantic Role Labeling:
+1. Identify the target event trigger lemma and its correct roleset sense in the given text.
+2. Annotate the document-level ARG-0 and ARG-1 roles using the PropBank website for the roleset definitions.
+3. If the ARG-1 role is an event, identify the head predicate and provide its roleset ID.
+4. Perform within-document and cross-document anaphora resolution of the ARG-0 and ARG-1 using Wikipedia.
+5. Use external resources, such as Wikipedia, to annotate ARG-Loc and ARG-Time
+
+Here is the example of the sentence with regular event and the expected response
+
+sentence: HP today announced that it has signed a definitive agreement to <m> acquire </m> EYP Mission Critical Facilities Inc.
+your response:
+roleset : acquire.01
+ARG-0 :HP (referencing https://en.wikipedia.org/wiki/Hewlett-Packard)
+ARG-1 : EYP
+ARG-Loc : https://en.wikipedia.org/wiki/United_States
+ARG-Time : November 12, 2007
+
+Here is the example of the sentence with event with an event ARG-1 and the expected response:
+
+sentence with eventive argument (ARG-1 is a roleset ID): HP today announced that it has <m> signed </m> a definitive agreement to acquire EYP Mission Critical Facilities Inc
+your response:
+roleset : sign.02
+ARG-0 : it (referencing https://en.wikipedia.org/wiki/Hewlett-Packard)
+ARG-1 : agree.01
+ARG-Loc : https://en.wikipedia.org/wiki/United_States
+ARG-Time : November 12, 2007
+
+Now similarly annotate the following event
+The Document with the marked event trigger:
+DOC_VAL
+

@@ -58,7 +58,7 @@ def save_pb_dict(
 
     if not input_path.exists():
         raise ValueError(f"Could not find {input_path}.")
-    if not output_path.exists():
+    if not output_path.parent.exists():
         output_path.parent.mkdir(parents=True)
 
     frame_files = list(glob(str(input_path) + '/*.xml'))

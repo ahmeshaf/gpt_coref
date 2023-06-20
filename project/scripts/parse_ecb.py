@@ -1,4 +1,3 @@
-# author: Rehan
 
 from collections import defaultdict, OrderedDict
 from bs4 import BeautifulSoup

@@ -6,6 +6,7 @@ vars:
   ecb-dir: corpus/ecb
   ecb-mention-map: corpus/ecb/mention_map.pkl
   pb-dict-path: outputs/common/pb.dict
+  dev_iter_mids: annotations/ecb/dev_iter/mention_ids.txt
 
 directories:
   - "configs"
@@ -38,8 +39,7 @@ assets:
 commands:
   - name: "ecb-setup"
     script:
-      - >-
-        python -m scripts.parse_ecb assets/ecb ${vars.ecb-dir} en_core_web_lg
+      - python -m scripts.parse_ecb assets/ecb ${vars.ecb-dir} en_core_web_lg
     deps:
       - assets/ecb
     outputs:
@@ -48,10 +48,17 @@ commands:
   - name: "save-propbank-dict"
     help: "generate an easy to use propbank dictionary for roleset definitions"
     script:
-      - echo "Saving propbank dict at ${vars.pb-dict-path}"
       - python -m scripts.parse_propbank assets/propbank_frames ${vars.pb-dict-path}
     deps:
       - assets/propbank_frames
     outputs:
       - ${vars.pb-dict-path}
 
+  - name: "gpt-simple"
+    help: "run a zero shot learning approach in the event graph generation"
+    script:
+      - >-
+        python -m scripts.gpt_pe gpt-simple 
+        ${vars.ecb-mention-map} ${vars.dev_iter_mids} 
+        outputs/gpt_simple.json gpt-3.5-turbo
+        --cache-file outputs/cache/gpt_simple_3.5.cache
