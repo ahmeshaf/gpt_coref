@@ -60,5 +60,69 @@ commands:
       - >-
         python -m scripts.gpt_pe gpt-simple 
         ${vars.ecb-mention-map} ${vars.dev_iter_mids} 
-        outputs/gpt_simple.json gpt-3.5-turbo
-        --cache-file outputs/cache/gpt_simple_3.5.cache
+        outputs/gpt_simple_22June.json gpt-3.5-turbo
+        --cache-file outputs/cache/gpt_simple_3.5_22June.cache
+
+  - name: "gpt-simple-dev"
+    help: "run a zero shot learning approach in the event graph generation"
+    script:
+      - >-
+        python -m scripts.gpt_pe gpt-simple-ecb 
+        ${vars.ecb-mention-map} ${vars.dev_iter_mids} 
+        outputs/ecb/gpt_dev_22June_.json
+        dev
+        gpt-4
+        --cache-file outputs/cache/gpt_simple_4_22June.cache
+        
+
+  - name: "single-ann2-results-dev"
+    help: "run a zero shot learning approach in the event graph generation"
+    script:
+      - >-
+        python -m scripts.coreference single-ann-results
+        ./annotations/ecb/dev/dev_full_srl_ann2_with_dis.jsonl
+
+  - name: "single-ann1-results-dev"
+    help: "run a zero shot learning approach in the event graph generation"
+    script:
+      - >-
+        python -m scripts.coreference single-ann-results
+        ./annotations/ecb/dev/dev_full_srl_ann1_with_dis.jsonl --use-vn
+
+  - name: "ann1-or-ann2-results-dev"
+    help: "run a zero shot learning approach in the event graph generation"
+    script:
+      - >-
+        python -m scripts.coreference or-ann-results
+        ./annotations/ecb/dev/dev_full_srl_ann1_with_dis.jsonl
+        ./annotations/ecb/dev/dev_full_srl_ann2_with_dis.jsonl
+        --use-vn
+
+  - name: "ann1-and-ann2-results-dev"
+    help: "run a zero shot learning approach in the event graph generation"
+    script:
+      - >-
+        python -m scripts.coreference and-ann-results
+        ./annotations/ecb/dev/dev_full_srl_ann1_with_dis.jsonl
+        ./annotations/ecb/dev/dev_full_srl_ann2_with_dis.jsonl
+
+  - name: "stupidly-large"
+    help: "run a zero shot learning approach in the event graph generation"
+    script:
+      - >-
+        python -m scripts.coreference run-stupidly-large-exp
+        ./annotations/ecb/dev/dev_full_srl_ann2_with_dis.jsonl
+
+  - name: "parsed-gpt-dev"
+    script:
+      - >-
+        python -m scripts.gpt_pe parse-gpt-responses
+        outputs/ecb/gpt_dev_22June_.json
+        outputs/ecb/gpt_dev_22June_parsed.json
+        ${vars.ecb-mention-map}
+
+  - name: "gpt-results-dev"
+    script:
+      - >-
+        python -m scripts.coreference gpt-results
+        outputs/ecb/gpt_dev_22June_parsed.json
