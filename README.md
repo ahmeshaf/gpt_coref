@@ -5,6 +5,8 @@ Accompanying code for the paper Zero-shot event coreference resolution with AMRs
 - Install the required packages:
 
     `pip install -r requirements.txt`
+- Additionally, to install `prodigy`, acquire a license and follow
+the instructions at [https://prodi.gy/docs/install](https://prodi.gy/docs/install)
 
 - Change directory to the `project`:
 

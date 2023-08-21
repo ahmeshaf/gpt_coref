@@ -1,5 +1,4 @@
 numpy
-prodigy
 spacy
 scipy
 typer
