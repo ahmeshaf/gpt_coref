@@ -1,18 +1,20 @@
-import copy
-from coval.conll.reader import get_coref_infos
+from collections import defaultdict
 from coval.eval.evaluator import evaluate_documents as evaluate
 from coval.eval.evaluator import muc, b_cubed, ceafe, lea
-from scipy.sparse.csgraph import connected_components
+from coval.conll.reader import get_coref_infos
 from scipy.sparse import csr_matrix, lil_matrix
-from typing import Optional
-from collections import defaultdict
+from scipy.sparse.csgraph import connected_components
 from tqdm import tqdm
-import numpy as np
+from typing import Optional
+
+import copy
 import itertools
+import json
+import numpy as np
+import os
 import timeit
 import typer
-import json
-import os
+
 
 app = typer.Typer()
 
