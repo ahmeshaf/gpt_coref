@@ -2,7 +2,6 @@ import copy
 from coval.conll.reader import get_coref_infos
 from coval.eval.evaluator import evaluate_documents as evaluate
 from coval.eval.evaluator import muc, b_cubed, ceafe, lea
-from prodigy.components.loaders import JSONL, JSON
 from scipy.sparse.csgraph import connected_components
 from scipy.sparse import csr_matrix, lil_matrix
 from typing import Optional
@@ -12,11 +11,24 @@ import numpy as np
 import itertools
 import timeit
 import typer
+import json
 import os
 
 app = typer.Typer()
 
 # ----------------------- Helpers ------------------------- #
+
+
+def JSON(file_path):
+    return json.load(open(file_path))
+
+
+def JSONL(file_path):
+    data = []
+    with open(file_path) as f:
+        for line in f:
+            data.append(json.loads(line))
+    return data
 
 
 def generate_key_file(coref_map_tuples, name, out_dir, out_file_path):
