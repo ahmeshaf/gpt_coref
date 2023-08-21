@@ -203,13 +203,13 @@ def generate_eids(tasks, syn_map):
         add_eid(task, syn_map, sent_rs_id2task)
 
 
-imp_keys = ['arg0', 'arg1', 'argL', 'argT', 'roleset_id', 'lemma',
-            'doc_id', 'sentence_id', 'mention_id', 'gold_cluster', 'topic']
+IMP_KEYS_COR = ['arg0', 'arg1', 'argL', 'argT', 'roleset_id', 'lemma',
+                'doc_id', 'sentence_id', 'mention_id', 'gold_cluster', 'topic']
 
 
 def clean_task(task):
     return {
-        k: task[k] for k in imp_keys
+        k: task[k] for k in IMP_KEYS_COR
     }
 
 
@@ -372,7 +372,7 @@ def or_ann_results(a1_path, a2_path, use_vn: Optional[bool]=False):
 def single_ann_results(tasks_file_path, use_vn: Optional[bool]=False):
     tasks = list(JSONL(tasks_file_path))
 
-    tasks = [{k: t[k] for k in imp_keys} for t in tasks]
+    tasks = [{k: t[k] for k in IMP_KEYS_COR} for t in tasks]
 
     pb_syn_map = {}
     if use_vn:

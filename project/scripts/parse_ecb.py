@@ -1,26 +1,29 @@
-from collections import defaultdict, OrderedDict
+from .utils import TASK_KEYS
+
 from bs4 import BeautifulSoup
-from spacy.tokens import Doc
-from typing import Optional
+from collections import defaultdict, OrderedDict
 from copy import deepcopy
 from pathlib import Path
+from spacy.tokens import Doc
 from tqdm import tqdm
-import zipfile
+from typing import Optional
+
+import glob
+import json
+import os
 import pickle
 import spacy
 import typer
-import json
-import glob
-import os
+import zipfile
+
 
 app = typer.Typer()
+
 # ---------------------- Helpers -------------------------- #
 
 VALIDATION = ["2", "5", "12", "18", "21", "23", "34", "35"]
 TRAIN = [str(i) for i in range(1, 36) if str(i) not in VALIDATION]
 TEST = [str(i) for i in range(36, 46)]
-
-IMP_KEYS = ['mention_id', 'topic', 'doc_id', 'sentence_id', 'bert_sentence', 'bert_doc', 'lemma', 'gold_cluster']
 
 
 class WhitespaceTokenizer:
@@ -272,28 +275,28 @@ def parse_annotations(annotation_folder: Path, output_folder: Path, spacy_model:
                 "type": mark.name,
             }
 
-            # add bert_sentence
+            # add marked_sentence
             sent_token_map = deepcopy(doc_sent_map[doc_name][sent_id]["token_map"])
             first_token_id = mention_tokens[0]["t_id"]
             final_token_id = mention_tokens[-1]["t_id"]
             mention["token_start"] = int(sent_token_map[first_token_id]["number"])
             mention["token_end"] = int(sent_token_map[final_token_id]["number"])
             sent_token_map[first_token_id]["text"] = (
-                "<m> " + sent_token_map[first_token_id]["text"]
+                '<mark id="mark_id"> ' + sent_token_map[first_token_id]["text"]
             )
             if final_token_id not in sent_token_map:
                 print(doc_name)
             sent_token_map[final_token_id]["text"] = (
-                sent_token_map[final_token_id]["text"] + " </m>"
+                sent_token_map[final_token_id]["text"] + " </mark>"
             )
-            bert_sentence = " ".join([s["text"] for s in sent_token_map.values()])
-            mention["bert_sentence"] = bert_sentence
+            marked_sentence = " ".join([s["text"] for s in sent_token_map.values()])
+            mention["marked_sentence"] = marked_sentence
 
-            # add bert_doc
+            # add marked_doc
             doc_sent_map_copy = deepcopy(doc_sent_map[doc_name])
-            doc_sent_map_copy[sent_id]["sentence"] = bert_sentence
-            bert_doc = "\n".join([s["sentence"] for s in doc_sent_map_copy.values()])
-            mention["bert_doc"] = bert_doc
+            doc_sent_map_copy[sent_id]["sentence"] = marked_sentence
+            marked_doc = "\n".join([s["sentence"] for s in doc_sent_map_copy.values()])
+            mention["marked_doc"] = marked_doc
 
             # coref_id
             if m_id in relation_map:
@@ -312,7 +315,7 @@ def parse_annotations(annotation_folder: Path, output_folder: Path, spacy_model:
 
             # add into mention map
             mention_id = doc_name + "_" + m_id
-            mention_map['mention_id'] = mention_id
+            mention['mention_id'] = mention_id
             mention_map[mention_id] = mention
 
     nlp = spacy.load(spacy_model)
@@ -373,7 +376,7 @@ def create_evt_tasks(
         mention['mention_id'] = m_id
     evt_mentions = sorted([v for v in mention_map.values() if v['split'] == split and v['men_type'] == 'evt'],
                           key=lambda x: (x['doc_id'], int(x['sentence_id'])))
-    evt_tasks = [mention2task(men, IMP_KEYS) for men in evt_mentions]
+    evt_tasks = [mention2task(men, TASK_KEYS) for men in evt_mentions]
 
     json.dump(evt_tasks, open(output_path, 'w'), indent=1)
 

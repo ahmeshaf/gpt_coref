@@ -193,8 +193,6 @@ JAVASCRIPT_WSD = """
                 arg0.value = task.arg0; //set that value back. 
             }
         } else {
-        console.log('The un cool answer was: ', roleset.value)
-            // createOptions(document.getElementById("rolesetList"), task.roleset_suggestions, allRolesets)
         }
     })
 
@@ -304,14 +302,13 @@ DOC_HTML2 = """
 <body>
 <div class="myBox">
 <p>
-    {{{bert_doc}}}
+    {{{marked_doc}}}
 <div>
 </body>
 </div>
 <style onload="scrollToMark()" />
 <script>
 function scrollToMark() {
-        console.log('Hello World');
         document.getElementById({{mention_id}}).scrollIntoView();
     }
 </script>
