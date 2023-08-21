@@ -9,6 +9,7 @@ import zipfile
 import pickle
 import spacy
 import typer
+import json
 import glob
 import os
 
@@ -18,6 +19,8 @@ app = typer.Typer()
 VALIDATION = ["2", "5", "12", "18", "21", "23", "34", "35"]
 TRAIN = [str(i) for i in range(1, 36) if str(i) not in VALIDATION]
 TEST = [str(i) for i in range(36, 46)]
+
+IMP_KEYS = ['mention_id', 'topic', 'doc_id', 'sentence_id', 'bert_sentence', 'bert_doc', 'lemma', 'gold_cluster']
 
 
 class WhitespaceTokenizer:
@@ -136,6 +139,31 @@ def get_sent_map_simple(doc_bs):
 
     return all_token_map, sent_map
 
+
+def mention2task(mention, copy_keys=None):
+    task = {}
+    if copy_keys:
+        for key in copy_keys:
+            task[key] = mention[key]
+
+    p_task = {
+        'text': mention['sentence'],
+
+        'spans': [{
+            'token_start': mention['token_start'],
+            'token_end': mention['token_end'],
+            'start': mention['start_char'],
+            'end': mention['end_char'],
+            'label': mention['men_type'].upper(),
+        }],
+
+        'meta': {
+            'Doc': mention['doc_id'],
+            'Sentence': mention['sentence_id'],
+        }
+    }
+
+    return {**task, **p_task}
 
 # ------------------------------- Commands ----------------------------- #
 
@@ -283,7 +311,9 @@ def parse_annotations(annotation_folder: Path, output_folder: Path, spacy_model:
             mention["tag_descriptor"] = tag_descriptor
 
             # add into mention map
-            mention_map[doc_name + "_" + m_id] = mention
+            mention_id = doc_name + "_" + m_id
+            mention_map['mention_id'] = mention_id
+            mention_map[mention_id] = mention
 
     nlp = spacy.load(spacy_model)
     nlp.tokenizer = WhitespaceTokenizer(nlp.vocab)
@@ -328,6 +358,26 @@ def parse_annotations(annotation_folder: Path, output_folder: Path, spacy_model:
     pickle.dump(mention_map, open(output_folder / f"mention_map.pkl", "wb"))
 
     return mention_map
+
+
+@app.command()
+def create_evt_tasks(
+        mention_map_path: Path,
+        output_path: Path,
+        split: str
+):
+    if not output_path.parent.exists():
+        output_path.parent.mkdir()
+    mention_map = pickle.load(open(mention_map_path, 'rb'))
+    for m_id, mention in mention_map.items():
+        mention['mention_id'] = m_id
+    evt_mentions = sorted([v for v in mention_map.values() if v['split'] == split and v['men_type'] == 'evt'],
+                          key=lambda x: (x['doc_id'], int(x['sentence_id'])))
+    evt_tasks = [mention2task(men, IMP_KEYS) for men in evt_mentions]
+
+    json.dump(evt_tasks, open(output_path, 'w'), indent=1)
+
+    print(f'Saved {len(evt_mentions)} event mentions!')
 
 
 if __name__ == "__main__":

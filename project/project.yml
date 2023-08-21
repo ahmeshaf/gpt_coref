@@ -50,7 +50,7 @@ commands:
   - name: "ecb-setup"
     help: "Preprocess and Create mention_map from ECB+ corpus"
     script:
-      - python -m scripts.parse_ecb assets/ecb ${vars.ecb-dir} en_core_web_lg
+      - python -m scripts.parse_ecb parse-annotations assets/ecb ${vars.ecb-dir} en_core_web_lg
     deps:
       - assets/ecb
     outputs:
@@ -70,6 +70,13 @@ commands:
     script:
       - python assets/propbank_scripts/create_frame_website.py --input ./assets/propbank_frames/ --output ./outputs/propbank
       - python -m http.server 8700 --directory ./outputs/propbank/ --bind 0.0.0.0
+
+  - name: "create-ecb-tasks"
+    help: "Create ECB+ Tasks for each Split"
+    script:
+      - python -m scripts.parse_ecb create-evt-tasks ./corpus/ecb/mention_map.pkl ./corpus/ecb/tasks/train.json train
+      - python -m scripts.parse_ecb create-evt-tasks ./corpus/ecb/mention_map.pkl ./corpus/ecb/tasks/dev.json dev
+      - python -m scripts.parse_ecb create-evt-tasks ./corpus/ecb/mention_map.pkl ./corpus/ecb/tasks/test.json test
 
   - name: "gpt-simple"
     help: "run a zero shot learning approach in the event graph generation"
