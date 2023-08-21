@@ -96,3 +96,10 @@ the instructions at [https://prodi.gy/docs/install](https://prodi.gy/docs/instal
 ## Annotations with GPT-4
 
 ## Coreference Results
+To run the coreference algorithm on Ann1's dev set annotations:
+
+`python -m scripts.coreference single-ann-results ./annotations/ecb/ann1/dev_pbmr.json`
+
+and,
+
+`python -m scripts.coreference single-ann-results ./annotations/ecb/ann1/dev_pbmr.json --use-vn `
