@@ -70,6 +70,7 @@ def save_pb_dict(
             rolesets = frame_bs.find_all('roleset')
             for roleset in rolesets:
                 rs_id = roleset['id']
+                lexlinks = [dict(l.attrs) for l in roleset.find_all('lexlink') if l]
                 rs_defs = {
                     'sense': rs_id,
                     'lemma': predicate,
@@ -82,6 +83,7 @@ def save_pb_dict(
                         {'id': 'ARG-' + r['n'], 'definition': r['descr']}
                         for r in roleset.find('roles').find_all('role')
                     ],
+                    'lexlinks': lexlinks,
                 }
                 rs_examples = [_get_eg_arg_spans(eg_) for eg_ in roleset.find_all('example')]
                 rs_defs['examples'] = rs_examples

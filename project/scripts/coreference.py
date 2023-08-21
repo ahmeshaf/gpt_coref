@@ -83,11 +83,11 @@ def run_coreference_results(gold_clusters, predicted_clusters, method_name):
     cp, cr, cf = np.round(np.round(evaluate(doc, ceafe), 3) * 100, 1)
     lr, lp, lf = np.round(np.round(evaluate(doc, lea), 3) * 100, 1)
 
-    recll = np.round((mr + br)/2, 1)
+    recll = np.round((mr+br)/2, 1)
     precision = np.round((mp + bp)/2, 1)
     connl = np.round((mf + bf + cf) / 3, 1)
 
-    print(f'{method_name} &&', recll, '&', precision, '&', connl, '\\\\')
+    print(f'{method_name} &&', recll, '&', precision, '&', lf, '&', connl, '\\\\')
 
 
 def c_clustering(sparse_matrix, m_ids):
@@ -250,8 +250,8 @@ def get_syn_map_vn(roleset_dict_path):
         if rs not in rs2cluster_arr:
             rs2cluster_arr[rs] = []
             for lexlink in rs_dict['lexlinks']:
-                if lexlink['@resource'] == 'VerbNet':
-                    rs2cluster_arr[rs].append(lexlink['@class'][0].split('.')[0])
+                if lexlink['resource'] == 'VerbNet':
+                    rs2cluster_arr[rs].append(lexlink['class'][0].split('.')[0])
     syn_vn = resolve_dict(rs2cluster_arr)
     return syn_vn
 
@@ -370,13 +370,16 @@ def or_ann_results(a1_path, a2_path, use_vn: Optional[bool]=False):
 
 @app.command()
 def single_ann_results(tasks_file_path, use_vn: Optional[bool]=False):
-    tasks = list(JSONL(tasks_file_path))
+    if str(tasks_file_path).endswith('jsonl'):
+        tasks = list(JSONL(tasks_file_path))
+    else:
+        tasks = list(JSON(tasks_file_path))
 
     tasks = [{k: t[k] for k in IMP_KEYS_COR} for t in tasks]
 
     pb_syn_map = {}
     if use_vn:
-        pb_syn_map = get_syn_map_vn('./outputs/common/roleset.dict')
+        pb_syn_map = get_syn_map_vn('./outputs/common/pb.dict')
     print(len(pb_syn_map))
     print(len(tasks))
     generate_eids(tasks, pb_syn_map)
