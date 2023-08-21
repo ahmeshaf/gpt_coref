@@ -1,8 +1,7 @@
 import copy
-
-from coval.coval.conll.reader import get_coref_infos
-from coval.coval.eval.evaluator import evaluate_documents as evaluate
-from coval.coval.eval.evaluator import muc, b_cubed, ceafe, lea
+from coval.conll.reader import get_coref_infos
+from coval.eval.evaluator import evaluate_documents as evaluate
+from coval.eval.evaluator import muc, b_cubed, ceafe, lea
 from prodigy.components.loaders import JSONL, JSON
 from scipy.sparse.csgraph import connected_components
 from scipy.sparse import csr_matrix, lil_matrix
