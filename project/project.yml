@@ -7,6 +7,7 @@ vars:
   ecb-mention-map: corpus/ecb/mention_map.pkl
   pb-dict-path: outputs/common/pb.dict
   dev_iter_mids: annotations/ecb/dev_iter/mention_ids.txt
+  pb-port: 8700
 
 directories:
   - "configs"
@@ -25,19 +26,29 @@ workflows:
 
 assets:
   - dest: "assets/ecb"
+    help: "The Event Coref Bank Plus Corpus"
     git:
       repo: "https://github.com/cltl/ecbPlus"
       branch: "master"
       path: "ECB+_LREC2014"
 
   - dest: "assets/propbank_frames"
+    desc: "The Proposition Bank Frame Files"
     git:
       repo: "https://github.com/propbank/propbank-frames"
       branch: "main"
       path: "frames"
 
+  - dest: "assets/propbank_scripts"
+    desc: "The Proposition Bank Website Scripts"
+    git:
+      repo: "https://github.com/ahmeshaf/propbank-frames"
+      branch: "main"
+      path: "scripts"
+
 commands:
   - name: "ecb-setup"
+    help: "Preprocess and Create mention_map from ECB+ corpus"
     script:
       - python -m scripts.parse_ecb assets/ecb ${vars.ecb-dir} en_core_web_lg
     deps:
@@ -53,6 +64,12 @@ commands:
       - assets/propbank_frames
     outputs:
       - ${vars.pb-dict-path}
+
+  - name: "propbank-website"
+    help: "run the propbank website"
+    script:
+      - python assets/propbank_scripts/create_frame_website.py --input ./assets/propbank_frames/ --output ./outputs/propbank
+      - python -m http.server 8700 --directory ./outputs/propbank/ --bind 0.0.0.0
 
   - name: "gpt-simple"
     help: "run a zero shot learning approach in the event graph generation"
