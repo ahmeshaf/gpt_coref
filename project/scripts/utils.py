@@ -1,10 +1,31 @@
 import json
 
+from spacy.tokens import Doc
+
 
 TASK_KEYS = ['mention_id', 'topic', 'doc_id', 'sentence_id', 'sentence',
              'marked_sentence', 'marked_doc', 'lemma', 'gold_cluster']
 
 TASK_KEYS_ANNOTATIONS = TASK_KEYS + ['text', 'spans', 'arg0', 'arg1', 'argL', 'argT', 'roleset_id', 'lemma']
+
+
+class WhitespaceTokenizer:
+    def __init__(self, vocab):
+        self.vocab = vocab
+
+    def __call__(self, text):
+        words = text.split(" ")
+        spaces = [True] * len(words)
+        # Avoid zero-length tokens
+        for i, word in enumerate(words):
+            if word == "":
+                words[i] = " "
+                spaces[i] = False
+        # Remove the final trailing space
+        if words[-1] == " ":
+            spaces[-1] = False
+
+        return Doc(self.vocab, words=words, spaces=spaces)
 
 
 def clean_up_tasks(tasks):

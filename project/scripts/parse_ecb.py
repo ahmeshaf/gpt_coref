@@ -1,10 +1,9 @@
-from .utils import TASK_KEYS
+from .utils import TASK_KEYS, WhitespaceTokenizer
 
 from bs4 import BeautifulSoup
 from collections import defaultdict, OrderedDict
 from copy import deepcopy
 from pathlib import Path
-from spacy.tokens import Doc
 from tqdm import tqdm
 from typing import Optional
 
@@ -24,25 +23,6 @@ app = typer.Typer()
 VALIDATION = ["2", "5", "12", "18", "21", "23", "34", "35"]
 TRAIN = [str(i) for i in range(1, 36) if str(i) not in VALIDATION]
 TEST = [str(i) for i in range(36, 46)]
-
-
-class WhitespaceTokenizer:
-    def __init__(self, vocab):
-        self.vocab = vocab
-
-    def __call__(self, text):
-        words = text.split(" ")
-        spaces = [True] * len(words)
-        # Avoid zero-length tokens
-        for i, word in enumerate(words):
-            if word == "":
-                words[i] = " "
-                spaces[i] = False
-        # Remove the final trailing space
-        if words[-1] == " ":
-            spaces[-1] = False
-
-        return Doc(self.vocab, words=words, spaces=spaces)
 
 
 def add_lexical_features(mention_map, sent_doc_map):

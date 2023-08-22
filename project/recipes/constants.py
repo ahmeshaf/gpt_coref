@@ -155,7 +155,7 @@ JAVASCRIPT_WSD = """
         // This runs every time the user submits an annotation
         const { answer, task } = event.detail
         // console.log('The answer was: ', answer)
-        console.log('The answer was: ', roleset.value)
+        // console.log('The answer was: ', roleset.value)
         // Update the rolesets with a unique list of previous + current
         allRolesets = [...new Set([...allRolesets, task.roleset_id, ...task.field_suggestions.roleset_id])]
         allArg0s = [...new Set([...allArg0s, task.arg0, ...task.field_suggestions.arg0])]
@@ -169,7 +169,6 @@ JAVASCRIPT_WSD = """
         // This runs every time the task is updated
         const { task } = event.detail
         if (prevTaskHash !== task._task_hash) {  // we have a new example
-            console.log('The cool answer was: ', roleset.value)
             createOptions(rolesetList, task.field_suggestions.roleset_id, allRolesets)
             createOptions(arg0List, task.field_suggestions.arg0, allArg0s)
             createOptions(arg1List, task.field_suggestions.arg1, allArg1s)
@@ -203,7 +202,7 @@ JAVASCRIPT_WSD = """
     }
 
     function updateRoleset(val) {
-        console.log('updating role')
+        // console.log('updating role')
         window.prodigy.update({roleset_id: val})
     }
 
@@ -275,13 +274,6 @@ DOC_HTML = """
                 </div>
                 """
 
-# DOC_HTML2 = """
-# <div class="myBox" height='500' >
-#     {{bert_doc}}
-# </div>
-#
-# """
-
 DOC_HTML2 = """
 <style>
     .myBox {
@@ -307,9 +299,4 @@ DOC_HTML2 = """
 </body>
 </div>
 <style onload="scrollToMark()" />
-<script>
-function scrollToMark() {
-        document.getElementById({{mention_id}}).scrollIntoView();
-    }
-</script>
 """
