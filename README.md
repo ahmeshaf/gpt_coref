@@ -4,7 +4,9 @@ Accompanying code for the paper Zero-shot event coreference resolution with AMRs
 ## Getting Started
 - Install the required packages:
 
-    `pip install -r requirements.txt`
+  ```shell
+  pip install -r requirements.txt
+  ```
 - Additionally, to install `prodigy`, acquire a license and follow
 the instructions at [https://prodi.gy/docs/install](https://prodi.gy/docs/install)
 
@@ -96,14 +98,19 @@ the instructions at [https://prodi.gy/docs/install](https://prodi.gy/docs/instal
 
 Run the prodigy UI for annotating the roleset ids for event triggers in the train set
 
-`prodigy wsd-update ann1_train_rsid en_core_web_lg ./corpus/ecb/tasks/train.json ./outputs/common/pb.dict -UP -F ./recipes/wsd.py`
+```shell
+prodigy wsd-update ann1_train_rsid en_core_web_lg ./corpus/ecb/tasks/train.json ./outputs/common/pb.dict -UP -F ./recipes/wsd.py
+```
 ## Annotations with GPT-4
 
 ## Coreference Results
 To run the coreference algorithm on Ann1's dev set annotations:
 
-`python -m scripts.coreference single-ann-results ./annotations/ecb/ann1/dev_pbmr.json`
-
+```shell
+python -m scripts.coreference single-ann-results ./annotations/ecb/ann1/dev_pbmr.json
+```
 and,
 
-`python -m scripts.coreference single-ann-results ./annotations/ecb/ann1/dev_pbmr.json --use-vn `
+```shell
+python -m scripts.coreference single-ann-results ./annotations/ecb/ann1/dev_pbmr.json --use-vn 
+```
