@@ -93,6 +93,10 @@ the instructions at [https://prodi.gy/docs/install](https://prodi.gy/docs/instal
   "argT": "2008"
 }
 ```
+
+Run the prodigy UI for annotating the roleset ids for event triggers in the train set
+
+`prodigy wsd-update ann1_train_rsid en_core_web_lg ./corpus/ecb/tasks/train.json ./outputs/common/pb.dict -UP -F ./recipes/wsd.py`
 ## Annotations with GPT-4
 
 ## Coreference Results
