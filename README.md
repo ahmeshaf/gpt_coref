@@ -12,31 +12,43 @@ the instructions at [https://prodi.gy/docs/install](https://prodi.gy/docs/instal
 
 - Change directory to the `project`:
 
-    `cd project`
+    ```shell
+    cd project
+    ```
  
 - Download the ECB+ Corpus, PropBank frames and PropBank Website:
 
-    `python -m spacy project assets`
+    ```shell
+    python -m spacy project assets
+    ```
 
 ## Preprocesing
 - Create mention_map from ECB+ corpus
 
-    `python -m spacy project run ecb-setup`
+    ```shell
+    python -m spacy project run ecb-setup
+    ```
 
 - Save propbank map (`pb.dict`) to access roleset definitions
 
-    `python -m spacy project run save-propbank-dict`
+    ```shell
+    python -m spacy project run save-propbank-dict
+    ```
 
 - Create propbank website locally to run on the port `8700` (this step can be skipped if not using 
   the annotation interface). You may have to start a new terminal session from the same directory 
   to continue after running this.
 
-    `python -m spacy project run propbank-website`
+    ```shell
+    python -m spacy project run propbank-website
+    ```
 
 ## Annotations with Prodigy
 - Create ECB+ Annotation Tasks
 
-  `python -m spacy project run create-ecb-tasks`
+  ```shell
+  python -m spacy project run create-ecb-tasks
+  ```
 
 - Example Task
 ```json
