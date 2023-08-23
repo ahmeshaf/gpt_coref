@@ -43,3 +43,7 @@ def clean_up_tasks(tasks):
             if key in task:
                 clean_task[key] = task[key]
     return cleaned_tasks
+
+
+def newline2para(text):
+    return text.replace('\n', '<p/>')

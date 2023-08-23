@@ -1,5 +1,5 @@
 from recipes.constants import *
-from scripts.utils import WhitespaceTokenizer
+from scripts.utils import WhitespaceTokenizer, newline2para
 
 from collections import defaultdict
 from prodigy.components.loaders import JSONL, JSON
@@ -110,6 +110,7 @@ def wsd_update(
                 new_task['roleset_id'] = best_roleset_id
                 new_task['predicted'] = {'roleset_id': best_roleset_id}
 
+            new_task['marked_doc'] = newline2para(new_task['marked_doc'])
             new_task = set_hashes(new_task, input_keys=('text',), task_keys=('mention_id',), overwrite=True)
             yield new_task
 
