@@ -126,8 +126,8 @@ HTML_INPUT = """
         </tr>
     </table>
     </div>    
-    <style onload="doThis()" />
-        """
+    <style onload="doThis()" />"""
+
 JAVASCRIPT_WSD = """
     let allRolesets = []
     let allArg0s = []
