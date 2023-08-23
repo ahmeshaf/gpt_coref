@@ -192,7 +192,7 @@ def parse_annotations(annotation_folder: Path, output_folder: Path, spacy_model:
     for ann_file in tqdm(
         list(glob.glob(ecb_plus_folder + "/*/*.xml")), desc="Reading ECB Corpus"
     ):
-        ann_bs = BeautifulSoup(open(ann_file, "r").read(), features="lxml")
+        ann_bs = BeautifulSoup(open(ann_file, "r", encoding="utf-8").read(), features="lxml")
         doc_name = ann_bs.find("document")["doc_name"]
         topic = doc_name.split("_")[0]
         # add document in doc_sent_map
