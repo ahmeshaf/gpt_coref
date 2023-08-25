@@ -1,4 +1,5 @@
 numpy
+penman
 spacy
 scipy
 typer
