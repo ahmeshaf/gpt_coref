@@ -64,12 +64,10 @@ def wsd_update(
         aliases = roledict['aliases']
         for alias in aliases:
             alias2roleset[alias].add(roleset)
-    alias2roleset = {lemma: sorted(rolesets, key=lambda x: x.split('.')[-1]) for lemma, rolesets in
-                     alias2roleset.items()}
 
     trs_arg2val_vec = {}
     field_suggestions = {key: set() for key in [ROLESET_ID] + ALL_ARGS}
-    field_suggestions[ROLESET_ID]= set(pb_dict.keys())
+    field_suggestions[ROLESET_ID] = set(pb_dict.keys())
 
     def make_wsd_tasks(stream_):
         texts = [(eg_["text"], eg_) for eg_ in stream_]
@@ -86,13 +84,15 @@ def wsd_update(
             else:
                 possible_rs = []
 
+            possible_rs_sort = sorted(possible_rs, key=lambda x: x.split('.')[-1])
+
             topic = task['topic']
             new_task['prop_holder'] = pb_link
             new_task['field_suggestions'] = field_suggestions
             for arg_name in ALL_ARGS:
                 new_task[arg_name] = ''
-            if len(possible_rs):
-                topic_rs = [(topic, rs) for rs in possible_rs]
+            if len(possible_rs_sort):
+                topic_rs = [(topic, rs) for rs in possible_rs_sort]
 
                 for trs in topic_rs:
                     if trs not in topic_sense2vec:
@@ -127,12 +127,12 @@ def wsd_update(
                     else:
                         topic_sense2vec[trs] = topic_sense2vec[trs] + nlp(answer['text']).vector
                     if answer['lemma'] not in alias2roleset:
-                        alias2roleset[answer['lemma']] = [curr_roleid]
+                        alias2roleset[answer['lemma']] = {curr_roleid}
                     elif curr_roleid not in alias2roleset[answer['lemma']]:
                         alias2roleset[answer['lemma']].add(curr_roleid)
 
                     if curr_roleid not in field_suggestions[ROLESET_ID]:
-                        field_suggestions[ROLESET_ID].append(curr_roleid)
+                        field_suggestions[ROLESET_ID].add(curr_roleid)
 
     def before_db(examples):
         for eg in examples:
