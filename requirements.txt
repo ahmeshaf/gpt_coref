@@ -6,4 +6,4 @@ typer
 tqdm
 bs4
 beautifulsoup4
-CoVal @ git+https://github.com/ns-moosavi/coval.git@87071a6293dc2e786dcfe2ed78e9369c17e41b3b
+CoVal @ git+https://github.com/ns-moosavi/coval.git@master

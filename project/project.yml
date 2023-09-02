@@ -69,7 +69,7 @@ commands:
     help: "run the propbank website"
     script:
       - python assets/propbank_scripts/create_frame_website.py --input ./assets/propbank_frames/ --output ./outputs/propbank
-      - python -m http.server 8700 --directory ./outputs/propbank/ --bind 0.0.0.0
+      - python -m http.server ${vars.pb-port} --directory ./outputs/propbank/ --bind 0.0.0.0
 
   - name: "create-ecb-tasks"
     help: "Create ECB+ Tasks for each Split"

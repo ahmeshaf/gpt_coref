@@ -1,3 +1,4 @@
 {
-    "theme":"spacy", "custom_theme":{"cardMaxWidth": 1000}
+    "theme":"spacy", "custom_theme":{"cardMaxWidth": 1000},
+    "show_flag": true
 }

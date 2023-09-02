@@ -47,3 +47,24 @@ def clean_up_tasks(tasks):
 
 def newline2para(text):
     return text.replace('\n', '<p/>')
+
+
+def JSON(file_path):
+    return json.load(open(file_path))
+
+
+def JSONL(file_path):
+    data = []
+    with open(file_path) as f:
+        for line in f:
+            data.append(json.loads(line))
+    return data
+
+
+def load_tasks(file_path):
+    if str(file_path).endswith('jsonl'):
+        return JSONL(file_path)
+    elif str(file_path).endswith('json'):
+        return JSON(file_path)
+    else:
+        raise ValueError("not a valid path name (json/jsonl)")

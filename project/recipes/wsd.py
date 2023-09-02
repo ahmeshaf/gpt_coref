@@ -21,6 +21,7 @@ def sort_tasks(tasks):
 
 # --------------------- RECIPES --------------------- #
 
+
 @prodigy.recipe(
     "wsd-update",
     dataset=("The dataset to use", "positional", None, str),
@@ -145,7 +146,7 @@ def wsd_update(
         {"view_id": "html", "html_template": DOC_HTML2},
         {'view_id': 'ner'},
         {"view_id": "html", "html_template": HTML_INPUT, 'text': None},
-        {'view_id': 'text_input', "field_rows": 1, "field_autofocus": False,
+        {'view_id': 'text_input', "field_rows": 3, "field_autofocus": False,
          "field_label": "Reason for Flagging"}
     ]
 
