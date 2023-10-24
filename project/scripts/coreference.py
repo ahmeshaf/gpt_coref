@@ -1,7 +1,7 @@
 from collections import defaultdict
-from coval.coval.eval.evaluator import evaluate_documents as evaluate
-from coval.coval.eval.evaluator import muc, b_cubed, ceafe, lea
-from coval.coval.conll.reader import get_coref_infos
+from coval.eval.evaluator import evaluate_documents as evaluate
+from coval.eval.evaluator import muc, b_cubed, ceafe, lea
+from coval.conll.reader import get_coref_infos
 from scipy.sparse import csr_matrix, lil_matrix
 from scipy.sparse.csgraph import connected_components
 from tqdm import tqdm
@@ -14,7 +14,7 @@ import os
 import timeit
 import typer
 
-from .utils import JSON, JSONL
+from .utils import load_tasks
 
 
 app = typer.Typer()
@@ -75,7 +75,7 @@ def run_coreference_results(gold_clusters, predicted_clusters, method_name):
     precision = np.round((mp + bp) / 2, 1)
     connl = np.round((mf + bf + cf) / 3, 1)
 
-    print(f"{method_name} &&", recll, "&", precision, "&", lf, "&", connl, "\\\\")
+    print(f"{method_name} &&", recll, "&", precision, "&", connl, "\\\\")
 
 
 def c_clustering(sparse_matrix, m_ids):
@@ -281,7 +281,7 @@ def dummy():
 def run_stupidly_large_exp(tasks_file_path):
     big_tasks_a = []
     bit_tasks_b = []
-    tasks_a = list([clean_task(t) for t in JSONL(tasks_file_path)])
+    tasks_a = list([clean_task(t) for t in load_tasks(tasks_file_path)])
     for i in range(100):
         tasks__a = copy.deepcopy(tasks_a)
         for t in tasks__a:
@@ -310,13 +310,13 @@ def run_stupidly_large_exp(tasks_file_path):
 
 @app.command()
 def and_ann_results(a1_path, a2_path, use_vn: Optional[bool] = False):
-    a1_tasks = list(JSONL(a1_path))
-    a2_tasks = list(JSONL(a2_path))
+    a1_tasks = list(load_tasks(a1_path))
+    a2_tasks = list(load_tasks(a2_path))
 
     print(len(a1_tasks))
     print(len(a2_tasks))
 
-    pb_syn_map = get_syn_map_vn("./outputs/common/roleset.dict")
+    pb_syn_map = get_syn_map_vn("./outputs/common/pb.dict")
     if not use_vn:
         pb_syn_map = {}
 
@@ -349,13 +349,13 @@ def and_ann_results(a1_path, a2_path, use_vn: Optional[bool] = False):
 
 @app.command()
 def or_ann_results(a1_path, a2_path, use_vn: Optional[bool] = False):
-    a1_tasks = list(JSONL(a1_path))
-    a2_tasks = list(JSONL(a2_path))
+    a1_tasks = list(load_tasks(a1_path))
+    a2_tasks = list(load_tasks(a2_path))
 
     print(len(a1_tasks))
     print(len(a2_tasks))
 
-    pb_syn_map = get_syn_map_vn("./outputs/common/roleset.dict")
+    pb_syn_map = get_syn_map_vn("./outputs/common/pb.dict")
     if not use_vn:
         pb_syn_map = {}
 
@@ -389,9 +389,9 @@ def or_ann_results(a1_path, a2_path, use_vn: Optional[bool] = False):
 @app.command()
 def single_ann_results(tasks_file_path, use_vn: Optional[bool] = False):
     if str(tasks_file_path).endswith("jsonl"):
-        tasks = list(JSONL(tasks_file_path))
+        tasks = list(load_tasks(tasks_file_path))
     else:
-        tasks = list(JSON(tasks_file_path))
+        tasks = list(load_tasks(tasks_file_path))
 
     tasks = [{k: t[k] for k in IMP_KEYS_COR} for t in tasks]
 
@@ -460,7 +460,7 @@ def single_ann_results(tasks_file_path, use_vn: Optional[bool] = False):
 
 @app.command()
 def gpt_results(tasks_file_path, use_vn: Optional[bool] = False):
-    tasks = list(JSON(tasks_file_path))
+    tasks = list(load_tasks(tasks_file_path))
     gold_clusters = [(t["mention_id"], t["gold_cluster"]) for t in tasks]
     # Lemma-Only
     pred_clusters = [(t["mention_id"], t["roleset_id"]) for t in tasks]

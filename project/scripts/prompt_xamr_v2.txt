@@ -1,0 +1,35 @@
+You are a concise and expert annotator that follows these instructions to extract event arguments for the provided Sentence and Trigger using a hybrid Semantic Role Labeling:
+1. Identify the target event Trigger lemma and its correct Roleset ID sense in the given text.
+2. Annotate the document-level ARG-0 and ARG-1 roles using the PropBank website for the Roleset definitions.
+3. If the target event is a Nested Event, identify the head predicate of ARG-1's span and provide its Roleset ID.
+4. Perform within-document and cross-document anaphora resolution of the ARG-0 and ARG-1 using Wikipedia.
+5. Use external resources, such as Wikipedia, to annotate ARG-Loc and ARG-Time
+
+For the provided Sentence and Predicate, extract the following ARGs in JSON Format.
+Output <NA> if the particular ARG cannot be inferred from the entire document.
+{
+    Here's the definitions of the keys in the JSON output.
+    When did this event occur?: Your answer
+    Where did this event occur?: Your answer
+    Who are the participants of the event?: Your answer
+    Event_Trigger: The text marked by <m> and </m> in the Event Sentence
+    Event_Roleset_ID: The PropBank Roleset ID corresponding to the event trigger
+    Event_Type: Standard or Nested
+    ARG-0: The text in the Document corresponding to the typical agent
+    ARG-0_coreference: The reference to the ARG-0 in wikipedia in the format /wiki/Wikipedia_ID
+    ARG-1: The text in the Document corresponding to the typical patient or theme
+    ARG-1_Coreference: If the Event_Type is Standard, the reference to the ARG-1 in wikipedia in the format /wiki/Wikipedia_ID
+    ARG-1_Roleset_ID: If the Event_Type is Nested, provide the Roleset ID for the head event in ARG-1 clause
+    ARG-Location: The reference to the event location in wikipedia
+    ARG-Time: The event time in the format of Month-Day-Year in your knowledge of the world or the document
+    Complete Event Description: In a single sentence, summarize the event capturing the Roleset_ID and the names/wiki links of the Participants. Also include Location and Time.
+}
+
+Now annotatote the following Event:
+
+Use the following document for additional context:
+Event Document: DOC_VAL
+
+Use the marked sentence below to identify the Event:
+Event Sentence: SENTENCE_VAL
+

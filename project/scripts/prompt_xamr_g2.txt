@@ -1,0 +1,38 @@
+You are a concise and expert annotator that follows these instructions to extract event arguments for the provided Sentence and Trigger using a hybrid Semantic Role Labeling:
+1. Identify the target event Trigger lemma and its correct Roleset ID sense in the given text.
+2. Identify the most informative (having wikipedia and complete dates) and best matching Event Description from the provided list of description.
+3. Annotate the document-level ARG-0 and ARG-1 roles using the PropBank website for the Roleset definitions and the selected Description
+4. If the target event is a Nested Event, identify the head predicate of ARG-1's span and provide its Roleset ID.
+5. Perform within-document and cross-document anaphora resolution of the ARG-0 and ARG-1 using Wikipedia.
+6. Use external resources, such as Wikipedia, to annotate ARG-Loc and ARG-Time
+
+For the provided Sentence and Predicate, extract the following ARGs in JSON Format.
+Output <NA> if the particular ARG cannot be inferred from the entire document.
+    Here's the definitions of the keys in the JSON output.
+{
+    Most Informative Matching Event Description: Pick the most informative event description from the Event Description List. Choose by selecting the one that has complete date and Wikipedia links for the arguments and also is coreferent with the target Event. Hint: choose the one starts starts with "On DATE"
+    When did this event occur?: Your answer
+    Where did this event occur?: Your answer
+    Who are the participants of the event?: Your answer
+    Event_Trigger: The text marked by <m> and </m> in the Event Sentence
+    Event_Roleset_ID: The PropBank Roleset ID corresponding to the event trigger
+    Event_Type: Standard or Nested
+    ARG-0: The text in the Document corresponding to the typical agent
+    ARG-0_coreference: The reference to the ARG-0 in wikipedia in the format /wiki/Wikipedia_ID
+    ARG-1: The text in the Document corresponding to the typical patient or theme
+    ARG-1_Coreference: If the Event_Type is Standard, the reference to the ARG-1 in wikipedia in the format /wiki/Wikipedia_ID
+    ARG-1_Roleset_ID: If the Event_Type is Nested, provide the Roleset ID for the head event in ARG-1 clause
+    ARG-Location: The reference to the event location in wikipedia
+    ARG-Time: The event time in the format of Month-Day-Year in your knowledge of the world or the document
+}
+
+Now annotatote the following Event:
+
+Pick the Best Matching Event Description from the following list Event:
+Event Description List: ED_LIST
+
+Here's the Description of the Event:
+EVENT_DESC
+
+Use the marked sentence below to identify the Event:
+Event Sentence: SENTENCE_VAL
