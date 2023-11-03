@@ -1,5 +1,14 @@
 # Propbank-Meaning Representation (PB-MR)
 
+## Contents
+
+  1. [Getting Started](#getting-started)
+  2. [Preprocessing](#preprocesing)
+  3. [Annotation Interface](#annotation-interface)
+  4. [Annotations](#annotations)
+  5. [GPT Generation](#gpt-generation)
+  6. [Coreference Results](#coreference-results)
+
 Accompanying code for the paper Zero-shot event coreference resolution with AMRs
 ## Getting Started
 - Install the required packages:
@@ -45,7 +54,9 @@ the instructions at [https://prodi.gy/docs/install](https://prodi.gy/docs/instal
     ```
     To check if this is working, enter `http://localhost:8700` in your browser.
 
-## Annotations with Prodigy
+## Annotation Interface
+We will use the Prodigy Annotation tool and load the recipe for our interface.
+
 - Create ECB+ Annotation Tasks
 
   ```shell
@@ -131,7 +142,8 @@ the instructions at [https://prodi.gy/docs/install](https://prodi.gy/docs/instal
   ```shell
   prodigy db-out ann1_train_pbmr > annotations/ann1_train_pbmr.jsonl
   ```
-## Annotations with GPT-4
+## Annotations
+## GPT Generation
 
 ## Coreference Results
 To run the coreference algorithm on Ann1's dev set annotations:
