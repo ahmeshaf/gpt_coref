@@ -143,6 +143,32 @@ We will use the Prodigy Annotation tool and load the recipe for our interface.
   prodigy db-out ann1_train_pbmr > annotations/ann1_train_pbmr.jsonl
   ```
 ## Annotations
+
+Annotated files can be found at: [/project/annotations/ecb/](/project/annotations/ecb/)
+
+The files are structured the following way:
+
+```sh
+ecb
+  |-- ann1
+    |-- dev_rs.json
+    |-- train_rs.json
+    |-- dev_small_xamr.json
+    |-- dev_xamr.json
+    |-- train_xamr.json
+    |-- test_common_xamr.json
+  |-- ann2
+    |-- dev_rs.json
+    |-- train_rs.json
+    |-- dev_small_xamr.json
+    |-- dev_xamr.json
+    |-- train_xamr.json
+    |-- test_common_xamr.json
+  |-- gpt-4
+    |-- dev_small_g1.json
+    |-- dev_small_g2.json
+```
+
 ## GPT Generation
 
 ## Coreference Results
