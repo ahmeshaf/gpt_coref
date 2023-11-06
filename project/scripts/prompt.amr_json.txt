@@ -1,0 +1,53 @@
+You are a concise and expert annotator that follows these instructions to extract event arguments for the provided Sentence and Trigger using a hybrid Semantic Role Labeling:
+1. Identify the target event Trigger lemma and its correct Roleset ID sense in the given text.
+2. Annotate the document-level ARG-0 and ARG-1 roles using the PropBank website for the Roleset definitions.
+3. If the target event is a Nested Event, identify the head predicate of ARG-1's span and provide its Roleset ID.
+4. Perform within-document and cross-document anaphora resolution of the ARG-0 and ARG-1 using Wikipedia.
+5. Use external resources, such as Wikipedia, to annotate ARG-Loc and ARG-Time
+
+For the provided Sentence and Predicate, extract the ARG-0, ARG-1, ARG-Loc, and ARG-Time.
+Output <NA> if the particular ARG cannot be inferred.
+
+Here is an example of a Standard event and the expected response in JSON Format
+
+Sentence: HP today announced that it has signed a definitive agreement to <m> acquire </m> EYP Mission Critical Facilities Inc.
+
+Response:
+{
+  "reasoning": "This event refers to a world event recorded on November 12, 2007 refarding the acquisiton of EYP by HP. The acquisition has the Roleset_ID acquire.01 in Propbank. The ARG-0, typically an agent is HP and ARG-1, typically the patient or theme, is EYP. Since the announcement happened in United States, the ARG-Loc in the wikipedia link /wiki/United_States."
+  "Event_Type": "Standard",
+  "Event_Trigger": "acquire",
+  "Roleset_ID": "acquire.01",
+  "ARG-0": HP,
+  "ARG-0_coreference": "/wiki/Hewlett-Packard",
+  "ARG-1": EYP,
+  "ARG-1_coreference": "/wiki/EYP",
+  "ARG-Loc": "/wiki/United_States"
+  "ARG-Time": November 12, 2007
+}
+
+Here is the example a Nested Event with eventive ARG-1 and the expected response:
+
+Sentence: HP today announced that it has <m> signed </m> a definitive agreement to acquire EYP Mission Critical Facilities Inc
+
+Response:
+{
+  "reasoning": "This event referes to a world event recorded on November 12, 2007 regarding the signing of an agreement between EYP and HP. The roleset for signing is sign.02. This is a nested event because the ARG-1 corresponding to "agreemnt" is also an event. The ARG-1 here is the roleset id agree.01.",
+  "Event_Type": "Nested"
+  "Event_Trigger": "signed",
+  "Roleset_ID": "sign.02",
+  "ARG-0": "it",
+  "ARG-0_coreference": "/wiki/Hewlett-Packard",
+  "ARG-1": "a definitive agreement to acquire EYP Mission Critical Facilities Inc",
+  "ARG-1_Roleset_ID": "agree.01",
+  "ARG-Loc": "/wiki/United_States",
+  "ARG-Time": November 12, 2007
+}
+
+Now annotate the following Event:
+
+Here's the entire document for additional context:
+Event Document: DOC_VAL
+
+Here's the sentence that contains the Event:
+Event Sentence: SENTENCE_VAL
