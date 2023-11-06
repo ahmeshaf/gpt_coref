@@ -1,4 +1,4 @@
-# Propbank-Meaning Representation (PB-MR)
+# Linear Cross-document Event Coreference Resolution using XAMR
 
 ## Contents
 
@@ -136,11 +136,11 @@ We will use the Prodigy Annotation tool and load the recipe for our interface.
 
 - Finally, running the prodigy UI for annotating PB-MR on the annotated `rsids`:
   ```shell
-  prodigy srl-update ann1_train_pbmr en_core_web_lg ./annotations/ann1_train_rsid.jsonl ./outputs/common/pb.dict -UP -F 
+  prodigy srl-update ann1_train_xamr en_core_web_lg ./annotations/ann1_train_rsid.jsonl ./outputs/common/pb.dict -UP -F 
   ```
   And then to save these annotations to a file:
   ```shell
-  prodigy db-out ann1_train_pbmr > annotations/ann1_train_pbmr.jsonl
+  prodigy db-out ann1_train_xamr > annotations/ann1_train_xamr.jsonl
   ```
 ## Annotations
 
@@ -175,10 +175,10 @@ ecb
 To run the coreference algorithm on Ann1's dev set annotations:
 
 ```shell
-python -m scripts.coreference single-ann-results ./annotations/ecb/ann1/dev_pbmr.json
+python -m scripts.coreference single-ann-results ./annotations/ecb/ann1/dev_xamr.json
 ```
 and,
 
 ```shell
-python -m scripts.coreference single-ann-results ./annotations/ecb/ann1/dev_pbmr.json --use-vn 
+python -m scripts.coreference single-ann-results ./annotations/ecb/ann1/dev_xamr.json --use-vn 
 ```
