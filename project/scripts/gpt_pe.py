@@ -18,7 +18,7 @@ from .utils import load_tasks
 
 curr_file_dir = os.path.dirname(__file__)
 PROMPT_FILE_SIMPLE = curr_file_dir + "/prompt.amr.txt"
-PROMPT_FILE_JSON = curr_file_dir + "/prompt_xamr_v2.txt"
+PROMPT_FILE_JSON = curr_file_dir + "/prompt_xamr_g1.txt"
 PROMPT_FILE_G2 = curr_file_dir + "/prompt_xamr_g2.txt"
 app = typer.Typer()
 
