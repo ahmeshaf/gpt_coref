@@ -78,14 +78,33 @@ commands:
       - python -m scripts.parse_ecb create-evt-tasks ./corpus/ecb/mention_map.pkl ./corpus/ecb/tasks/dev.json dev
       - python -m scripts.parse_ecb create-evt-tasks ./corpus/ecb/mention_map.pkl ./corpus/ecb/tasks/test.json test
 
-  - name: "gpt-simple"
-    help: "run a zero shot learning approach in the event graph generation"
+  - name: "run-g1"
+    help: "Generate X-amr with G1 Method"
     script:
       - >-
         python -m scripts.gpt_pe gpt-simple 
-        ${vars.ecb-mention-map} ${vars.dev_iter_mids} 
-        outputs/gpt_simple_22June.json gpt-3.5-turbo
-        --cache-file outputs/cache/gpt_simple_3.5_22June.cache
+        ${vars.ecb-mention-map} ./annotations/ecb/ann1/dev_small_xamr.json
+        outputs/gpt/dev_small_g1.json gpt-4
+        --cache-file outputs/cache/dev_small_g1.cache
+      - >-
+        python -m scripts.gpt_pe gpt-json2task 
+        outputs/gpt/dev_small_g1.json
+        ./annotations/ecb/ann1/dev_small_xamr.json
+        ./annotations/ecb/gpt-4/dev_small_g1.json
+
+  - name: "run-g2"
+    help: "Generate X-amr with G2 Method"
+    script:
+      - >-
+        python -m scripts.gpt_pe gpt-g2
+        ./annotations/ecb/gpt-4/dev_small_g1.json
+        outputs/gpt/dev_small_g2.json gpt-4
+        --cache-file outputs/cache/dev_small_g2.cache
+      - >-
+        python -m scripts.gpt_pe gpt-json2task 
+        outputs/gpt/dev_small_g2.json
+        ./annotations/ecb/ann1/dev_small_xamr.json
+        ./annotations/ecb/gpt-4/dev_small_g2.json
 
   - name: "gpt-simple-dev"
     help: "run a zero shot learning approach in the event graph generation"

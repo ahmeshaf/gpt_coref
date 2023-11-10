@@ -170,6 +170,15 @@ ecb
 ```
 
 ## GPT Generation
+Running the G1 method:
+```shell
+python -m spacy project run-g1
+```
+
+Running the G2 method:
+```shell
+python -m spacy project run-g2
+```
 
 ## Coreference Results
 To run the coreference algorithm on Ann1's dev set annotations:
