@@ -121,13 +121,16 @@ def nested_arguments_count(ann1_path: Path, ann2_path: Path):
         if len(re.findall(r"\.\d{2}", ann1_task["arg1"] + " " + ann2_task["arg1"])):
             task_nested_arg.append(mid)
 
-        if not (locs == "NA" or locs == "NANA" or locs == ""):
+        if locs and ("NA" not in locs):
             loc_men_ids.append(mid)
+        else:
+            print(locs)
 
         if not (tims == "NA" or tims == ""):
             time_men_ids.append(mid)
 
-
+    doc_ids = set([task['doc_id'] for task in ann1_tasks + ann2_tasks])
+    print("Docs:", len(doc_ids))
     print("Total:", len(mention_ids))
     print("Nested ARG-1:", len(task_nested_arg))
     print("/w Locs:", len(loc_men_ids))

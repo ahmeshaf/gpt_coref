@@ -1,5 +1,5 @@
-from project.recipes.constants import *
-from project.scripts.utils import WhitespaceTokenizer, newline2para
+from recipes.constants import *
+from scripts.utils import WhitespaceTokenizer, newline2para
 
 from collections import defaultdict
 from prodigy.components.loaders import JSONL, JSON
@@ -200,7 +200,7 @@ def wsd_update(
         "before_db": before_db,
         "exclude": None,
         "config": config,
-        "total_tasks": total_tasks,
+        "total_tasks": total_tasks
     }
 
 

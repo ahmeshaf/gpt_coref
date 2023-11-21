@@ -185,7 +185,7 @@ JAVASCRIPT_WSD = """
             }
             else {
                 roleset.value = task.roleset_id;
-                roleset.disabled = true;
+                roleset.disabled = false;
                 arg0.scrollIntoView();
                 arg0.focus();
                 arg0.value = '';

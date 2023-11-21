@@ -2,8 +2,8 @@ import json
 from collections import defaultdict
 from prodigy.components.loaders import JSONL, JSON
 from prodigy.util import set_hashes
-from project.scripts.parse_ecb import WhitespaceTokenizer
-from project.recipes.constants import *
+from scripts.parse_ecb import WhitespaceTokenizer
+from recipes.constants import *
 from scipy.spatial.distance import cosine
 from typing import Optional
 from tqdm import tqdm
@@ -67,7 +67,7 @@ def srl_update(
     pb_dict_path: str,
     update: bool = False,
     port: Optional[int] = 8080,
-    pb_link: Optional[str] = "http://0.0.0.0:8701/",
+    pb_link: Optional[str] = "http://127.0.0.1:8700/",
 ):
     nlp = spacy.load(spacy_model)
     nlp.tokenizer = WhitespaceTokenizer(nlp.vocab)
@@ -83,7 +83,7 @@ def srl_update(
     else:
         raise TypeError("Need jsonl file type for source.")
 
-    stream = sort_tasks(stream)
+    stream = list(stream)
 
     total_tasks = len(stream)
     # print(stream[0]['answer'])
@@ -211,7 +211,7 @@ def srl_update(
         "span_labels": labels,  # Selectable label options
         "auto_count_stream": not update,  # Whether to recount the stream at initialization
         "show_stats": True,
-        "host": "0.0.0.0",
+        "host": "127.0.0.1",
         "port": port,
         "blocks": blocks,
         "batch_size": batch_size,
@@ -224,10 +224,10 @@ def srl_update(
         "view_id": "blocks",  # Annotation interface to use
         "dataset": dataset,  # Name of dataset to save annotations
         "stream": stream,  # Incoming stream of examples
-        "update": make_updates,
+        # "update": make_updates,
         "exclude": None,
         "config": config,
-        "total_tasks": total_tasks,
+        # "total_tasks": total_tasks,
     }
 
 
