@@ -1,4 +1,4 @@
-# Linear Cross-document Event Coreference Resolution using XAMR
+# Linear Cross-document Event Coreference Resolution using X-AMR & X-AMR Annotation Tool
 
 ## Contents
 
@@ -9,7 +9,7 @@
   5. [GPT Generation](#gpt-generation)
   6. [Coreference Results](#coreference-results)
 
-Accompanying code for the paper Zero-shot event coreference resolution with AMRs
+Accompanying code for the papers Linear Cross-document Event Coreference Resolution using X-AMR & X-AMR Annotation Tool
 ## Getting Started
 - Install the required packages:
 
