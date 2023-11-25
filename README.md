@@ -1,5 +1,8 @@
 # Linear Cross-document Event Coreference Resolution using X-AMR & X-AMR Annotation Tool
 
+**Please use**  [tinyurl.com/f3nksb7p](
+http://tinyurl.com/f3nksb7p) for the EACL demo link!!
+
 ## Contents
 
   1. [Getting Started](#getting-started)
