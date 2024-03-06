@@ -11,6 +11,7 @@ http://tinyurl.com/f3nksb7p) for the EACL demo link!!
   4. [Annotations](#annotations)
   5. [GPT Generation](#gpt-generation)
   6. [Coreference Results](#coreference-results)
+  7. [Citation](#citation)
 
 Accompanying code for the papers _Linear Cross-document Event Coreference Resolution with X-AMR_ & _X-AMR Annotation Tool_
 ## Getting Started
