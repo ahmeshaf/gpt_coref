@@ -194,3 +194,35 @@ and,
 ```shell
 python -m scripts.coreference single-ann-results ./annotations/ecb/ann1/dev_xamr.json --use-vn 
 ```
+
+## Citation
+If you find this repository useful, please use the following 2 citations in your work:
+```shell
+@inproceedings{ahmed-etal-2024-xtool,
+    title = "X-AMR Annotation Tool",
+    author = "
+      Ahmed, Shafiuddin Rehan  and Cai, Jon and
+      Palmer, Martha  and
+      Martin, James H.",
+    booktitle = "Proceedings of the 18th Conference of the European Chapter of the Association for Computational Linguistics: System Demonstrations",
+    month = Mar,
+    year = "2024",
+    address = "Malta",
+    publisher = "Association for Computational Linguistics",
+}
+
+@inproceedings{ahmed-etal-2024-xamr,
+    title = "Linear Cross-document Event Coreference Resolution with X-AMR",
+    author = "
+      Ahmed, Shafiuddin Rehan  and Baker, George and
+      Judge, Evi and
+      Regan, Michael and
+      Wright-Bettner, Kristin and
+      Palmer, Martha  and
+      Martin, James H.",
+    booktitle = "Proceedings of the 15th Language Resources and Evaluation Conference, and, the 30th International Conference on Computational Linguistics",
+    month = May,
+    year = "2024",
+    address = "Torino, Italy",
+}
+```
