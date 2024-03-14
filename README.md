@@ -221,9 +221,10 @@ If you find this repository useful, please use the following 2 citations in your
       Wright-Bettner, Kristin and
       Palmer, Martha  and
       Martin, James H.",
-    booktitle = "Proceedings of the 15th Language Resources and Evaluation Conference, and, the 30th International Conference on Computational Linguistics",
+    booktitle = "Proceedings of the Joint Conference of the 15th Language Resources and Evaluation Conference, and, the 30th International Conference on Computational Linguistics",
     month = May,
     year = "2024",
     address = "Torino, Italy",
+    publisher = "European Language Resources Association"
 }
 ```
