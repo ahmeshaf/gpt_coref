@@ -199,17 +199,22 @@ python -m scripts.coreference single-ann-results ./annotations/ecb/ann1/dev_xamr
 ## Citation
 If you find this repository useful, please use the following 2 citations in your work:
 ```shell
-@inproceedings{ahmed-etal-2024-xtool,
-    title = "X-AMR Annotation Tool",
-    author = "
-      Ahmed, Shafiuddin Rehan  and Cai, Jon and
+@inproceedings{ahmed-etal-2024-x,
+    title = "{X}-{AMR} Annotation Tool",
+    author = "Ahmed, Shafiuddin Rehan  and
+      Cai, Jon  and
       Palmer, Martha  and
       Martin, James H.",
+    editor = "Aletras, Nikolaos  and
+      De Clercq, Orphee",
     booktitle = "Proceedings of the 18th Conference of the European Chapter of the Association for Computational Linguistics: System Demonstrations",
-    month = Mar,
+    month = mar,
     year = "2024",
-    address = "Malta",
+    address = "St. Julians, Malta",
     publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.eacl-demo.19",
+    pages = "177--186",
+    abstract = "This paper presents a novel Cross-document Abstract Meaning Representation (X-AMR) annotation tool designed for annotating key corpus-level event semantics. Leveraging machine assistance through the Prodigy Annotation Tool, we enhance the user experience, ensuring ease and efficiency in the annotation process. Through empirical analyses, we demonstrate the effectiveness of our tool in augmenting an existing event corpus, highlighting its advantages when integrated with GPT-4. Code and annotations: href{https://anonymous.4open.science/r/xamr-9ED0}{anonymous.4open.science/r/xamr-9ED0} footnote Demo: {href{https://youtu.be/TuirftxciNE}{https://youtu.be/TuirftxciNE}} footnote Live Link: {href{https://tinyurl.com/mrxmafwh}{https://tinyurl.com/mrxmafwh}}",
 }
 
 @inproceedings{ahmed-etal-2024-xamr,
