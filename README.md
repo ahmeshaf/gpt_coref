@@ -28,7 +28,10 @@ the instructions at [https://prodi.gy/docs/install](https://prodi.gy/docs/instal
     ```shell
     cd project
     ```
- 
+- Download spacy library
+    ```shell
+    python -m spacy download en_core_web_lg
+    ```
 - Download the ECB+ Corpus, PropBank frames and PropBank Website:
 
     ```shell
