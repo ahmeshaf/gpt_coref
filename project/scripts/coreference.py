@@ -282,30 +282,56 @@ def run_stupidly_large_exp(tasks_file_path):
     big_tasks_a = []
     bit_tasks_b = []
     tasks_a = list([clean_task(t) for t in load_tasks(tasks_file_path)])
-    for i in range(100):
-        tasks__a = copy.deepcopy(tasks_a)
-        for t in tasks__a:
-            t["mention_id"] += "_" + str(i)
-            t["doc_id"] += "_" + str(i)
-            t["sentence_id"] += "_" + str(i)
-            # t['topic'] += '_' + str(i)
-        big_tasks_a.extend(tasks__a)
-        tasks__b = copy.deepcopy(tasks__a)
-        bit_tasks_b.extend(tasks__b)
 
-    print(len(big_tasks_a))
+    t_lens = []
+    times_ms = []
 
-    start_time = timeit.default_timer()
-    generate_eids(big_tasks_a, {})
-    eid_N_a = [(t["mention_id"], t["EIDs"]) for t in big_tasks_a]
-    generate_eids(bit_tasks_b, {})
-    eid_N_b = [(t["mention_id"], t["EIDs"]) for t in bit_tasks_b]
+    for i in tqdm(list(range(4, 15)), desc="Running exp"):
+        big_tasks_a = []
+        for j in range((i+1)*10):
+            for t in tasks_a:
+                t_a = copy.deepcopy(t)
+                t_a["mention_id"] += "_" + str(i) + "_" + str(j)
+                t_a["doc_id"] += "_" + str(i) + "_" + str(j)
+                t_a["sentence_id"] += "_" + str(i) + "_" + str(j)
+                big_tasks_a.append(t_a)
 
-    print("clustering")
-    eid_N_a_and_b = and_clustering(eid_N_a, eid_N_b)
-    elapsed = timeit.default_timer() - start_time
+        t_lens.append(len(big_tasks_a))
+        start_time = timeit.default_timer()
+        generate_eids(big_tasks_a, {})
+        eid_N = [(t["mention_id"], t["EIDs"]) for t in big_tasks_a]
+        a_clustering(eid_N)
+        elapsed = timeit.default_timer() - start_time
 
-    print("total elapsed time for the experiment", elapsed)
+        times_ms.append(elapsed)
+
+    print("mentions=", t_lens)
+    print("times_eids=", times_ms)
+
+    # for i in range(100):
+    #     tasks__a = copy.deepcopy(tasks_a)
+    #     for t in tasks__a:
+    #         t["mention_id"] += "_" + str(i)
+    #         t["doc_id"] += "_" + str(i)
+    #         t["sentence_id"] += "_" + str(i)
+    #         # t['topic'] += '_' + str(i)
+    #     big_tasks_a.extend(tasks__a)
+    #     tasks__b = copy.deepcopy(tasks__a)
+    #     bit_tasks_b.extend(tasks__b)
+    #
+    # print(len(big_tasks_a))
+    #
+    # start_time = timeit.default_timer()
+    # generate_eids(big_tasks_a, {})
+    # eid_N_a = [(t["mention_id"], t["EIDs"]) for t in big_tasks_a]
+    # generate_eids(bit_tasks_b, {})
+    # eid_N_b = [(t["mention_id"], t["EIDs"]) for t in bit_tasks_b]
+    #
+    # print("clustering")
+    # eid_N_a_and_b = or_clustering(eid_N_a, eid_N_b)
+    # elapsed = timeit.default_timer() - start_time
+    #
+    # print("total elapsed time for the experiment", elapsed)
 
 
 @app.command()
@@ -415,9 +441,11 @@ def single_ann_results(tasks_file_path, use_vn: Optional[bool] = False):
         pred_clusters = [
             (
                 t["mention_id"],
-                pb_syn_map[t["roleset_id"]]
-                if t["roleset_id"] in pb_syn_map
-                else t["roleset_id"],
+                (
+                    pb_syn_map[t["roleset_id"]]
+                    if t["roleset_id"] in pb_syn_map
+                    else t["roleset_id"]
+                ),
             )
             for t in tasks
         ]
