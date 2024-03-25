@@ -222,8 +222,8 @@ If you find this repository useful, please use the following 2 citations in your
 
 @inproceedings{ahmed-etal-2024-xamr,
     title = "Linear Cross-document Event Coreference Resolution with X-AMR",
-    author = "
-      Ahmed, Shafiuddin Rehan  and Baker, George and
+    author = "Ahmed, Shafiuddin Rehan  and
+      Baker, George and
       Judge, Evi and
       Regan, Michael and
       Wright-Bettner, Kristin and
