@@ -220,19 +220,14 @@ If you find this repository useful, please use the following 2 citations in your
     abstract = "This paper presents a novel Cross-document Abstract Meaning Representation (X-AMR) annotation tool designed for annotating key corpus-level event semantics. Leveraging machine assistance through the Prodigy Annotation Tool, we enhance the user experience, ensuring ease and efficiency in the annotation process. Through empirical analyses, we demonstrate the effectiveness of our tool in augmenting an existing event corpus, highlighting its advantages when integrated with GPT-4. Code and annotations: href{https://anonymous.4open.science/r/xamr-9ED0}{anonymous.4open.science/r/xamr-9ED0} footnote Demo: {href{https://youtu.be/TuirftxciNE}{https://youtu.be/TuirftxciNE}} footnote Live Link: {href{https://tinyurl.com/mrxmafwh}{https://tinyurl.com/mrxmafwh}}",
 }
 
-@inproceedings{ahmed-etal-2024-xamr,
-    title = "Linear Cross-document Event Coreference Resolution with X-AMR",
-    author = "Ahmed, Shafiuddin Rehan  and
-      Baker, George and
-      Judge, Evi and
-      Regan, Michael and
-      Wright-Bettner, Kristin and
-      Palmer, Martha  and
-      Martin, James H.",
-    booktitle = "Proceedings of the Joint Conference of the 15th Language Resources and Evaluation Conference, and, the 30th International Conference on Computational Linguistics",
-    month = May,
-    year = "2024",
-    address = "Torino, Italy",
-    publisher = "European Language Resources Association"
+@misc{ahmed2024linear,
+    title={Linear Cross-document Event Coreference Resolution with X-AMR},
+    author={Shafiuddin Rehan Ahmed and George Arthur Baker and Evi Judge and Michael Regan and Kristin Wright-Bettner and Martha Palmer and James H. Martin},
+    month=mar,
+    year={2024},
+    eprint={2404.08656},
+    archivePrefix={arXiv},
+    primaryClass={cs.CL},
+    url = "https://arxiv.org/pdf/2404.08656.pdf"
 }
 ```
