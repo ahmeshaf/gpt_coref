@@ -14,6 +14,10 @@ http://tinyurl.com/f3nksb7p) for the EACL demo link!!
   7. [Citation](#citation)
 
 Accompanying code for the papers _Linear Cross-document Event Coreference Resolution with X-AMR_ & _X-AMR Annotation Tool_
+
+Paper1: LREC-COLING 2024 [https://arxiv.org/abs/2404.08656](https://arxiv.org/abs/2404.08656)
+
+Paper2: EACL 2024 [https://arxiv.org/abs/2403.15407](https://arxiv.org/abs/2403.15407)
 ## Getting Started
 - Install the required packages:
 
