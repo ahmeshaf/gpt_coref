@@ -28,8 +28,8 @@ Output <NA> if the particular ARG cannot be inferred from the entire document.
 Now annotatote the following Event:
 
 Use the following document for additional context:
-Event Document: DOC_VAL
+Event Document: {{marked_doc}}
 
 Use the marked sentence below to identify the Event:
-Event Sentence: SENTENCE_VAL
+Event Sentence: {{marked_sentence}}
 
